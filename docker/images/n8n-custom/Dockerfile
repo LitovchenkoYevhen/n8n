@@ -1,12 +1,35 @@
 ARG NODE_VERSION=20
 
 # 1. Create an image to build n8n
-FROM --platform=linux/amd64 n8nio/base:${NODE_VERSION} AS builder
+FROM n8nio/base:${NODE_VERSION} AS builder
 
 # Build the application from source
 WORKDIR /src
 COPY . /src
-RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store --mount=type=cache,id=pnpm-metadata,target=/root/.cache/pnpm/metadata DOCKER_BUILD=true pnpm install --frozen-lockfile
+# Устанавливаем переменные среды перед установкой зависимостей
+ENV SHELL=/bin/sh
+ENV ENV=/etc/profile
+ENV PNPM_HOME=/root/.local/share/pnpm
+ENV PATH="${PNPM_HOME}/bin:${PATH}"
+
+# Устанавливаем зависимости с кешированием
+RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
+    --mount=type=cache,id=pnpm-metadata,target=/root/.cache/pnpm/metadata \
+    DOCKER_BUILD=true pnpm install --frozen-lockfile
+
+# Настраиваем PNPM
+RUN pnpm setup
+
+# 🔥 Явно добавляем `PNPM_HOME` в `PATH` перед установкой Turbo
+ENV PATH="${PNPM_HOME}:${PNPM_HOME}/bin:${PATH}"
+
+# Устанавливаем Turbo
+RUN echo "PATH=$PATH" && pnpm install -g turbo
+RUN turbo --version
+
+# Создаем кеш для Turbo
+RUN mkdir -p /tmp/turbo
+ENV TURBO_CACHE_DIR=/tmp/turbo
 RUN pnpm build
 
 # Delete all dev dependencies
