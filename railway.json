@@ -1,0 +1,1 @@
+{"$schema":"https://railway.com/railway.schema.json","build":{"builder":"NIXPACKS","buildCommand":"pnpm install --frozen-lockfile","nixpacksConfigPath":"nixpacks.toml"},"deploy":{"startCommand":"n8n start","healthcheckPath":"/","healthcheckTimeout":300,"restartPolicyType":"ALWAYS","restartPolicyMaxRetries":5}}
