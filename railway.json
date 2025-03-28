@@ -8,7 +8,7 @@
     "startCommand": "n8n start",
     "healthcheckPath": "/",
     "healthcheckTimeout": 300,
-    "restartPolicyType": "on-failure",
+    "restartPolicyType": "always",
     "restartPolicyMaxRetries": 3,
     "env": {
       "NODE_ENV": "production"
