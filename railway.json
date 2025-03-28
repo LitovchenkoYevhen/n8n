@@ -9,7 +9,7 @@
     "startCommand": "n8n start",
     "healthcheckPath": "/",
     "healthcheckTimeout": 300,
-    "restartPolicyType": "ALWAYS",
+    "restartPolicyType": "on_failure",
     "restartPolicyMaxRetries": 10
   }
 }
