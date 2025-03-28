@@ -1,7 +1,8 @@
 {
   "build": {
     "builder": "nixpacks",
-    "buildCommand": "corepack enable && corepack prepare pnpm@latest --activate && pnpm install --frozen-lockfile"
+    "buildCommand": "pnpm install --frozen-lockfile",
+    "nixpacksConfigPath": "nixpacks.toml"
   },
   "deploy": {
     "startCommand": "n8n start",
