@@ -16,7 +16,9 @@ services:
       - '${DB_POSTGRESDB_PORT}:5432'
 
   n8n:
-    image: n8nio/n8n
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: unless-stopped
     ports:
       - '5678:5678'
