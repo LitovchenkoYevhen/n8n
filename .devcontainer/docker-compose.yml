@@ -8,8 +8,8 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=n8n
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=${DB_POSTGRESDB_DATABASE}
+      - POSTGRES_PASSWORD=${DB_POSTGRESDB_PASSWORD}
 
   n8n:
     build:
@@ -21,4 +21,7 @@ services:
     environment:
       DB_POSTGRESDB_HOST: postgres
       DB_TYPE: postgresdb
-      DB_POSTGRESDB_PASSWORD: password
+      DB_POSTGRESDB_DATABASE: ${DB_POSTGRESDB_DATABASE}
+      DB_POSTGRESDB_USER: ${DB_POSTGRESDB_USER}
+      DB_POSTGRESDB_PASSWORD: ${DB_POSTGRESDB_PASSWORD}
+      DB_POSTGRESDB_PORT: ${DB_POSTGRESDB_PORT}
