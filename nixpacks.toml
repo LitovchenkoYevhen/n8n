@@ -1,8 +1,15 @@
+providers = ["nodejs"]
+
 [phases.setup]
 nixPkgs = ["nodejs", "pnpm"]
 
 [phases.install]
+dependsOn = ["setup"]
 cmds = ["pnpm install --frozen-lockfile"]
 
 [phases.build]
+dependsOn = ["install"]
 cmds = ["pnpm run build"]
+
+[phases.start]
+cmds = ["n8n start"]
