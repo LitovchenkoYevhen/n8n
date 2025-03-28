@@ -1,4 +1,4 @@
-.PHONY: up down ps logs clean shell n8n postgres build install dev
+.PHONY: up down ps logs clean shell n8n postgres build install dev rebuild
 
 # Запуск контейнеров
 up:
@@ -7,6 +7,11 @@ up:
 # Остановка контейнеров
 down:
 	docker compose --env-file .env -f .devcontainer/docker-compose.yml down
+
+# Полная пересборка контейнеров
+rebuild:
+	docker compose --env-file .env -f .devcontainer/docker-compose.yml down -v
+	docker compose --env-file .env -f .devcontainer/docker-compose.yml up -d --build
 
 # Просмотр статуса контейнеров
 ps:
